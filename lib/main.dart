@@ -88,6 +88,27 @@ class _HomeState extends State<Home> {
                     reactCourse = val!;
                   });
                 })),
+            
+            flutterCourse?Container(
+              width: double.infinity,
+              height: 200,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage('https://docs.flutter.dev/assets/images/flutter-logo-sharing.png'),
+                ),
+              ),
+            ):Container(),
+            reactCourse?Container(
+              width: double.infinity,
+              height: 200,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage('https://reactjs.org/logo-og.png'),
+                ),
+              ),
+            ):Container(),
           ],
         )),
       ),
