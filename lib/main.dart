@@ -95,11 +95,12 @@ class MyApp extends StatelessWidget {
                       width: 150,
                     ),
                     Text(
-                      "Buy Now",
+                      "Buy Now here",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ],
+
                 ),
               ),
             ],
