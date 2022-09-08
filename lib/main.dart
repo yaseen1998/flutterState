@@ -6,105 +6,143 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color newcolor = Colors.white;
+  @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(),
-          body: ListView(
+        appBar: AppBar(),
+        body: Container(
+          color: newcolor,
+          child: ListView(
             // parent listview
             physics: BouncingScrollPhysics(), // this is for decoration
             children: [
-              Container(
-                child: Image(
-                    image: NetworkImage(
-                        "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
+              Column(
+                children: [
+                  const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image(
+                        image: NetworkImage(
+                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.star),
+                      Icon(Icons.star_border),
+                      Icon(Icons.star_half),
+                    ],
+                  ),
+                  // insider list view (the child one )
+                ],
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Icon(Icons.shop),
-                    SizedBox(
-                      width: 150,
-                    ),
-                    Text(
-                      "Buy Now",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+
+              const Divider(
+                color: Colors.black,
+                thickness: 2,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image(
+                        image: NetworkImage(
+                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
+                  ),
+                  Column(
+                    children: const [
+                      Icon(Icons.stop),
+                      Icon(Icons.stop_circle),
+                      Icon(Icons.stop_circle_sharp),
+                    ],
+                  ),
+                ],
+              ),
+
+              const Divider(
+                color: Colors.black,
+                thickness: 2,
+              ),
+
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.stop_sharp),
+                      Icon(Icons.storage),
+                      Icon(Icons.store_mall_directory),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image(
+                        image: NetworkImage(
+                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
+                  ),
+                ],
+              ),
+
+              const Divider(
+                color: Colors.black,
+                thickness: 2,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: const [
+                      Icon(Icons.shop),
+                      Icon(Icons.shop_two),
+                      Icon(Icons.share_arrival_time),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image(
+                        image: NetworkImage(
+                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
+                  ),
+                ],
+              ),
+
+              const Divider(
+                color: Colors.black,
+                thickness: 2,
               ),
               // insider list view (the child one )
-              Container(
-                height: 400,
-                width: 900,
-                child: ListView( scrollDirection: Axis.horizontal,
-                  // physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    Container(
-                      child: Image(
-                          image: NetworkImage(
-                              "https://th.bing.com/th/id/R.3e0708db7cae1cdf64c2e9f7d9d95f55?rik=Q0e9KB%2fK6Ov0yg&pid=ImgRaw&r=0")),
-                    ),
-                    Container(
-                      child: Image(
-                          image: NetworkImage(
-                              "https://th.bing.com/th/id/R.1573992639cb9bc56a7bd4b7c9423f45?rik=gMta6wR5rt9DLw&pid=ImgRaw&r=0")),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                child: Image(
-                    image: NetworkImage(
-                        "https://1.bp.blogspot.com/-n3YUsCOh3WI/VVmjQm2RCwI/AAAAAAAACBY/oBqTcuLmF1o/s1600/337171-dell-inspiron-14r-5437%2B(1).jpg")),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Icon(Icons.shop),
-                    SizedBox(
-                      width: 150,
-                    ),
-                    Text(
-                      "Buy Now",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Image(
-                    image: NetworkImage(
-                        "https://1.bp.blogspot.com/-n3YUsCOh3WI/VVmjQm2RCwI/AAAAAAAACBY/oBqTcuLmF1o/s1600/337171-dell-inspiron-14r-5437%2B(1).jpg")),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Icon(Icons.shop),
-                    SizedBox(
-                      width: 150,
-                    ),
-                    Text(
-                      "Buy Now here",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(onPressed: () { setState(() { newcolor = Colors.red; }); }, color: Colors.red, icon: const Icon(Icons.circle)),
+                  IconButton(onPressed: () { setState(() { newcolor = Colors.blue; }); }, color: Colors.blue, icon: const Icon(Icons.circle)),
+                  IconButton(onPressed: () { setState(() { newcolor = Colors.orange; }); }, color: Colors.orange, icon: const Icon(Icons.circle)),
+                  IconButton(onPressed: () { setState(() { newcolor = Colors.green; }); }, color: Colors.green, icon: const Icon(Icons.circle)),
+                  IconButton(onPressed: () { setState(() { newcolor = Colors.white; }); }, color: Colors.white, icon: const Icon(Icons.circle)),
 
-                ),
+                ],
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
