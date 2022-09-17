@@ -1,17 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapppp/ScreenOne.dart';
+import 'package:myapppp/ScreenTwo.dart';
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Home();
-  }
+  runApp(const MaterialApp(
+    home: Home(),
+  ));
 }
 
 class Home extends StatefulWidget {
@@ -22,95 +16,103 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool flutterCourse = false;
-  bool reactCourse = false;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Container(
-            child: Column(
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://thumbs.dreamstime.com/b/blue-sky-clouds-natural-background-92873892.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              "Please selecet you Course!",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.purple,
-                  fontWeight: FontWeight.bold),
-            ),
-            Divider(height: 35),
-            CheckboxListTile(
-                secondary: Icon(
-                  Icons.book,
-                  color: Colors.amber,
+            Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: 150,
+                margin: const EdgeInsets.only(top: 50),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.blue,
+                      Colors.red,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(40),
                 ),
-                subtitle: Text("based on dart programming",
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 500,
+                  height: 100,
+                  color: Colors.amber.shade300,
+                  child: const Text(
+                    'Select Courses',
                     style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 20,
-                        color: Colors.green[700])),
-                title: Text(
-                  "Flutter",
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold),
-                ),
-                value: flutterCourse,
-                onChanged: ((val) {
-                  setState(() {
-                    flutterCourse = val!;
-                  });
-                })),
-            CheckboxListTile(
-                secondary: Icon(
-                  Icons.book,
-                  color: Colors.amber,
-                ),
-                subtitle: Text(
-                  "based on dart programming",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.green[700]),
-                ),
-                title: Text(
-                  "React",
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold),
-                ),
-                value: reactCourse,
-                onChanged: ((val) {
-                  setState(() {
-                    reactCourse = val!;
-                  });
-                })),
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                )),
+            const SizedBox(height: 200),
+            ElevatedButton.icon(
+              onPressed: () {
+                 Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScreenTwo()));
             
-            flutterCourse?Container(
-              width: double.infinity,
-              height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage('https://docs.flutter.dev/assets/images/flutter-logo-sharing.png'),
+              },
+              icon: const Icon(Icons.face_retouching_natural_sharp),
+              label: const Text('you prefernce page'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: const Color.fromARGB(255, 92, 88, 88), 
+                backgroundColor: const Color.fromARGB(255, 102, 173, 231),
+                shadowColor: Colors.yellow,
+                elevation: 50,
+                fixedSize: const Size(300, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ):Container(),
-            reactCourse?Container(
-              width: double.infinity,
-              height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage('https://reactjs.org/logo-og.png'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                 Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScreenOne()));
+            
+              },
+              icon: const Icon(Icons.favorite_border),
+              label: const Text('fill you informations'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: const Color.fromARGB(255, 213, 10, 10),
+                 backgroundColor: const Color.fromARGB(255, 98, 71, 175),
+                shadowColor: Colors.green,
+                elevation: 50,
+                fixedSize: const Size(300, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
+                textStyle:const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
-            ):Container(),
+            ),
           ],
-        )),
+        ),
       ),
     );
   }
