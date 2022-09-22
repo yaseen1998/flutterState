@@ -15,9 +15,10 @@ class _HomeState extends State<Home> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 29, 11, 121),
             actions: [
               Center(
-                child: ElevatedButton.icon(
+                child: IconButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -26,8 +27,8 @@ class _HomeState extends State<Home> {
                         }),
                       );
                     },
-                    icon: const Icon(Icons.ac_unit),
-                    label: const Text('discover')),
+                    icon: const Icon(Icons.menu_open),
+                    ),
               )
             ],
             title: Row(
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
           ),
           body: Center(
               child: Row(
-            children: const [Text('Hello '), const Icon(Icons.sim_card)],
+            children: const [Text('You can click In menu in top right',style: TextStyle(fontSize: 20),)],
           )),
         ));
   }
