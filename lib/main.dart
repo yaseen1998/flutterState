@@ -1,9 +1,16 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp(),
+  initialRoute: 'my home page',
+  // routes:{
+  //   '/a':(context)=>PageA(),
+  //   '/b':(context)=>PageB(),
+  //   '/c':(context)=>PageC(),
+  // 'my home page':(context)=>MyHomePage(),
+  // },
+  
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -14,134 +21,78 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Color newcolor = Colors.white;
+  List StudentName = [
+    'Student 1',
+    'Student 2',
+    'Student 3',
+    'Student 4',
+    'Student 5',
+    'Student 1',
+    'Student 2',
+    'Student 3',
+    'Student 4',
+    'Student 5',
+  ];
   @override
   Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Container(
-          color: newcolor,
+    return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.yellow,
+        child: Center(
           child: ListView(
-            // parent listview
-            physics: BouncingScrollPhysics(), // this is for decoration
             children: [
-              Column(
-                children: [
-                  const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                        image: NetworkImage(
-                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.star),
-                      Icon(Icons.star_border),
-                      Icon(Icons.star_half),
-                    ],
-                  ),
-                  // insider list view (the child one )
-                ],
+              CircleAvatar(
+                radius: 30,
               ),
-
-              const Divider(
-                color: Colors.black,
-                thickness: 2,
+              DrawerHeader(
+                child: Text("Drawer Header"),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                ),
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                        image: NetworkImage(
-                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
-                  ),
-                  Column(
-                    children: const [
-                      Icon(Icons.stop),
-                      Icon(Icons.stop_circle),
-                      Icon(Icons.stop_circle_sharp),
-                    ],
-                  ),
-                ],
-              ),
-
-              const Divider(
-                color: Colors.black,
-                thickness: 2,
-              ),
-
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.stop_sharp),
-                      Icon(Icons.storage),
-                      Icon(Icons.store_mall_directory),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                        image: NetworkImage(
-                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
-                  ),
-                ],
-              ),
-
-              const Divider(
-                color: Colors.black,
-                thickness: 2,
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: const [
-                      Icon(Icons.shop),
-                      Icon(Icons.shop_two),
-                      Icon(Icons.share_arrival_time),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                        image: NetworkImage(
-                            "https://th.bing.com/th/id/R.89ee28915ec60f85282cc057d363ef15?rik=MIaZ1cf%2fK8kYLg&pid=ImgRaw&r=0")),
-                  ),
-                ],
-              ),
-
-              const Divider(
-                color: Colors.black,
-                thickness: 2,
-              ),
-              // insider list view (the child one )
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(onPressed: () { setState(() { newcolor = Colors.red; }); }, color: Colors.red, icon: const Icon(Icons.circle)),
-                  IconButton(onPressed: () { setState(() { newcolor = Colors.blue; }); }, color: Colors.blue, icon: const Icon(Icons.circle)),
-                  IconButton(onPressed: () { setState(() { newcolor = Colors.orange; }); }, color: Colors.orange, icon: const Icon(Icons.circle)),
-                  IconButton(onPressed: () { setState(() { newcolor = Colors.green; }); }, color: Colors.green, icon: const Icon(Icons.circle)),
-                  IconButton(onPressed: () { setState(() { newcolor = Colors.white; }); }, color: Colors.white, icon: const Icon(Icons.circle)),
-
-                ],
+              ListTile(
+                title: Text("Item 1"),
+                subtitle: Text('sub'),
+                leading: Card(
+                  color: Colors.blue,
+                  child: Icon(Icons.home),
+                ),
               ),
             ],
           ),
         ),
+      ),
+      endDrawer: Container(
+        child: Text("End Drawer"),
+        color: Colors.red,
+        height: 400,
+        width: 200,
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+      ),
+      body: ListView.separated(
+        itemCount: 10,
+        separatorBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onHorizontalDragStart: ((details) => print('right')),
+            onHorizontalDragEnd: ((details)=>print('left')),
+            child: Container(
+              height: 50,
+              color: Colors.white,
+            ),
+          );
+        },
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+              shadowColor: Color.fromARGB(255, 165, 1, 194),
+              elevation: 20,
+              child: Container(
+                height: 100,
+                color: Colors.blue,
+                child:Text(StudentName[index]),
+              ));
+        },
       ),
     );
   }
