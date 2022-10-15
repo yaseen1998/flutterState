@@ -22,10 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(floatingActionButton: FloatingActionButton(onPressed: () {
-      showDialog(context: context, builder: (context) => const Adddata());
-    }),
-    body:SignIn()
-    );
+    return Firestore();
   }
 }

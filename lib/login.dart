@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:myapppp/firestore.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -11,6 +13,8 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+    var storage = FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +51,9 @@ class _loginState extends State<login> {
                     await auth.createUserWithEmailAndPassword(
                         email: emailController.text,
                         password: passwordController.text);
+                    await storage.write(key:'token',value: userCredential.user?.refreshToken);
+                    Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Firestore()));
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
