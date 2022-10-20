@@ -4,8 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:myapppp/adddata.dart';
 import 'package:myapppp/firestore.dart';
 import 'package:myapppp/login.dart';
+import 'package:myapppp/screen/LoginWithGmail.dart';
+import 'package:myapppp/screen/login_screen.dart';
 import 'package:myapppp/sign.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +25,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Firestore();
+   return Login_screen();
   }
 }

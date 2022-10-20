@@ -4,6 +4,7 @@ import 'package:myapppp/adddata.dart';
 import 'package:myapppp/sign.dart';
 import 'package:myapppp/updatedata.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Firestore extends StatefulWidget {
   const Firestore({super.key});
@@ -13,20 +14,88 @@ class Firestore extends StatefulWidget {
 }
 
 class _FirestoreState extends State<Firestore> {
-  final Stream<QuerySnapshot> _usersStream =
+  final Stream<QuerySnapshot> _productsStream =
       FirebaseFirestore.instance.collection('products').snapshots();
-  var storage = FlutterSecureStorage();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        FirebaseFirestore.instance
+            .collection('user')
+            .doc(user.uid)
+            .get()
+            .then((value) {
+          setState(() {
+            isAdmin = value.data()!['isAdmin'];
+          });
+        });
+      }
+    });
+  }
+
+  bool isAdmin = false;
   @override
   Widget build(BuildContext context) {
+    Future<void> update(id) async {
+      if (isAdmin) {
+        showDialog(
+          context: context,
+          builder: (context) => UpdataData(documentID: id),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('you are no admin your can not update'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('login')),
+            ],
+          ),
+        );
+      }
+    }
+
+    Future<void> delete(id) async {
+      if (isAdmin) {
+        FirebaseFirestore.instance
+            .collection('products')
+            .doc(id)
+            .delete()
+            .then((value) => const Text("deleted"));
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('you are no admin your can not update'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('login')),
+            ],
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: () {
         showDialog(context: context, builder: (context) => const Adddata());
       }),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _usersStream,
+        stream: _productsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return Text(snapshot.error.toString());
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -47,66 +116,13 @@ class _FirestoreState extends State<Firestore> {
                     IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        storage.read(key: 'token').then((value) {
-                          if (value != null) {
-                            FirebaseFirestore.instance
-                                .collection('products')
-                                .doc(document.id)
-                                .delete();
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('first you must login'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SignIn()));
-                                      },
-                                      child: const Text('login'))
-                                ],
-                              ),
-                            );
-                          }
-                        });
+                        delete(document.id);
                       },
                     ),
                     IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        storage.read(key: 'token').then(
-                          (value) {
-                            if (value != null) {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    UpdataData(documentID: document.id),
-                              );
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('first you must login'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignIn()));
-                                        },
-                                        child: const Text('login'))
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                        );
+                        update(document.id);
                       },
                     )
                   ],

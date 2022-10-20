@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:myapppp/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -13,7 +14,17 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-    var storage = FlutterSecureStorage();
+  var storage = FlutterSecureStorage();
+  CollectionReference user = FirebaseFirestore.instance.collection('user');
+
+  Future<void> addUser(id) {
+    // Call the user's CollectionReference to add a new user
+    return user.doc(id).set({
+      'email': emailController.text, // John Doe
+      'password': passwordController.text, // Stokes and Sons
+    }).then((value) => print("user Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +62,11 @@ class _loginState extends State<login> {
                     await auth.createUserWithEmailAndPassword(
                         email: emailController.text,
                         password: passwordController.text);
-                    await storage.write(key:'token',value: userCredential.user?.refreshToken);
-                    Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Firestore()));
+                await storage.write(
+                    key: 'token', value: userCredential.user?.refreshToken);
+                addUser(userCredential.user?.uid);
+                // Navigator.push(
+                // context, MaterialPageRoute(builder: (context) => Firestore()));
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
