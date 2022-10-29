@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:myapppp/firestore.dart';
+import 'package:myapppp/Screen/BackgrounColor.dart';
+import 'package:myapppp/Screen/SignUp.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
-
-  @override
-  State<login> createState() => _loginState();
-}
-
-class _loginState extends State<login> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-    var storage = FlutterSecureStorage();
+class Login extends StatelessWidget {
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       body: Column(children: [
@@ -46,21 +39,30 @@ class _loginState extends State<login> {
         TextButton(
             onPressed: () async {
               try {
-                var auth = FirebaseAuth.instance;
+                var login = FirebaseAuth.instance;
                 UserCredential userCredential =
-                    await auth.createUserWithEmailAndPassword(
+                    await login.signInWithEmailAndPassword(
                         email: emailController.text,
                         password: passwordController.text);
-                    await storage.write(key:'token',value: userCredential.user?.refreshToken);
-                    Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Firestore()));
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const BackgroundColor()));
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(e.toString()),
                 ));
               }
             },
-            child: const Text('signup'))
+            child: const Text('Sign in')),
+            const Divider(height: 25),
+            TextButton(
+              onPressed:(){
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const SignUp()));
+              
+              },
+              child: const Text('Sign up'),
+            )
       ]),
     );
   }

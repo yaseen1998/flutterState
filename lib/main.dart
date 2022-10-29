@@ -1,10 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:myapppp/adddata.dart';
-import 'package:myapppp/firestore.dart';
-import 'package:myapppp/login.dart';
-import 'package:myapppp/sign.dart';
+import 'package:myapppp/Screen/Login.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -13,7 +9,7 @@ Future<void> main() async {
 
 // Ideal time to initialize
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-  runApp(MaterialApp(home: MyApp()));
+  runApp(const MaterialApp(home: MyApp()));
 //...
 }
 
@@ -22,6 +18,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Firestore();
+    return const Login();
   }
 }
